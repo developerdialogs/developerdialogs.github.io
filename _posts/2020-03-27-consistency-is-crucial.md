@@ -5,7 +5,7 @@ title: "Consistency is not so consistent"
 subtitle: 
 # bigimg: /img/path.jpg
 published: true
-tags: []
+tags: [software consistency, code review]
 excerpt: As a software system is modified, its disorder, or entropy, tends to increase. Let's do a code review exercise to spot some inconsistencies in the following code snippet.
 ---
 
