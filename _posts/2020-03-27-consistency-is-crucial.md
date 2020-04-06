@@ -5,7 +5,7 @@ title: "Consistency is not so consistent"
 subtitle: 
 # bigimg: /img/path.jpg
 published: true
-tags: [software consistency, code review]
+tags: [code review, best practices]
 excerpt: As a software system is modified, its disorder, or entropy, tends to increase. Let's do a code review exercise to spot some inconsistencies in the following code snippet.
 ---
 
@@ -44,6 +44,9 @@ As you can guess, these can get subjective pretty quickly too, but its important
 As Ivar Jacobson rightfully said:
 
 > As a system is modified, its disorder, or entropy, tends to increase.
+
+In the [next article](/why-is-software-consistency-important) in this series, you can read about what makes consistency so desirable, reasons that software become inconsistent and how to remedy it.
+
 
 Reference: 
 - https://en.wikipedia.org/wiki/Software_entropy
