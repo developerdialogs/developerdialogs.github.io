@@ -73,6 +73,9 @@ layout: base
         <div class="staticman-comments">
           {% include staticman-comments.html %}
         </div>
+        {% if page.comments_id %}
+          {% include github-comments.html %}
+        {% endif %}
       {% endif %}
     </div>
   </div>
