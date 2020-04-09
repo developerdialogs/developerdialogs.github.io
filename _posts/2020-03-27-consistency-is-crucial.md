@@ -39,7 +39,7 @@ Now tick the ones you were able to spot.
 
 We just code reviewed 14 lines and more than **62%** have inconsistencies!
 
-As you can guess, these can get subjective pretty quickly too, but its important to not lose sight & heart. The point is that in order to build a sustainable product every effort should be made to avoid inconsistencies in a single code repository.
+As you can guess, these can get subjective pretty quickly too, but its important not to lose sight & heart. The point is that in order to build a sustainable product every effort should be made to avoid inconsistencies in a single code repository.
 
 As Ivar Jacobson rightfully said:
 

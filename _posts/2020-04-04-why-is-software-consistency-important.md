@@ -13,7 +13,7 @@ excerpt: Why is consistency in software so important ? What factors contribute t
 
 ---- 
 
-Code is harder to read than to write and a consistent code is 100 if not a 1000 times easier to read. While reading code, a programmer needs to visualize the the algorithm and how the code is operating. A simple oversight or mistake in reading (noticed the double "the" in the previous sentence ?) can can cause bugs or faulty behavior in the code.
+Code is harder to read than to write and a consistent code is 100 if not a 1000 times easier to read. While reading code, a programmer needs to visualize the the algorithm and how the code is operating. A simple oversight or mistake in reading (noticed the double "the" in the previous sentence ?) can cause bugs or faulty behavior in the code.
 
 Not only this, a consistent coding guide or convention will help new members on the team to start becoming productive quicker. This is because its easier to teach them one coding style that your team follows, instead of having them learn myriad of different practices present in your codebase.
 
@@ -26,13 +26,13 @@ Next, let's take a look at some of the reasons these inconsistencies may get int
 
     *Resolution*: This is normal and do not lose sight of your learning. When working on a personal project or for your curriculum, research and apply best practices, while trying to keep things consistent. Understand that this is a part of the learning curve.
 
-1. **Under Communication** - Perhaps the most important factor that contributes to inconsistencies in a codebase. Silos between programmers can wreck havoc on codebase even if everyone have good intentions and are constantly working to improve the code.
+1. **Under Communication** - Lack of Communication is perhaps the most important factor that contributes to inconsistencies in a codebase. Silos between programmers can wreck havoc on codebase even if everyone have good intentions and are constantly working to improve the code.
 
-    *Resolution*:  Communicate. If you identify certain issues, bring it up with your colleagues. Have a chat with your leads and document it. This would also be a great time to make use of any ticketing system that you use and document your findings in a backlog ticket. 
+    *Resolution*:  **Communicate!** If you identify certain issues, bring it up with your colleagues. Have a chat with your leads and document it. This would also be a great time to make use of any ticketing system that you use and document your findings in a backlog ticket. 
 
     Please do not start working on it without first discussing and prioritizing it with your teammates, as doing this is a slippery slope. After all, it is the responsibility of a team to deliver their best work together.
 
-    Code reviews - Lastly code review is an important piece in ensuring the collective knowledge of team is applied
+    Code reviews - Lastly, code review is an important piece which ensures that the collective knowledge of team is applied. Be constructive in giving feedback and be gracious when receiving it.
 
 1. **Team size** - People are opinionated and have different learning experiences. As the team size increases, so will the variations that each programmer tend to introduce. 
 
@@ -46,14 +46,18 @@ Next, let's take a look at some of the reasons these inconsistencies may get int
 
     *Resolution*: Think of code as a complex living organism. It has evolved over the years while continuing to grow. How would you diagnose and treat such an organism ? 
 
-    First and foremost, identify if there is even a disorder ? Things that seem inconsistent to you, are they actual disorders or just features. After all different length fingers in a human body is part of evolution.
+    First and foremost, identify if there is even a disorder ? Things that seem inconsistent to you, are they actual disorders or just features. After all, different length fingers in a human body is part of the evolution!
     
-    After diagnosis, one possible answer would be to measure, test and repair one disorder at a time. This would translate to 1. document the inconsistencies 2. write tests to make sure your changes work as expected and 3. fix the inconsistencies.
+    After diagnosis, one possible answer would be to measure, test and repair one disorder at a time. This would translate to:
 
-    Another possible answer depending on how bad the inconsistency or disorder is to replace the defected piece. Be careful though, this should probably be your last resort. And make sure you do not fall into [this trap.](https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/){:target="_blank"}
+    1. document the inconsistencies
+    1. write tests to make sure your changes work as expected and
+    1. fix the inconsistencies.
 
-1. **3rd party dependencies** - This might not seem obvious at first, but let me try explaining it. Imagine yourself using a 3rd party library that in the world of Promises & Futures, still uses callbacks. Now this library is essential and because you do not have time to waste, you end up sacrificing consistency in lieu of using the library. Now your code has a mix of promises and callbacks and you have to add weird promise constructors every time you use this library.
+    Another possible answer, depending on how bad the inconsistency or disorder is, to replace the defected piece. Be careful though, this should probably be your last resort! And make sure you do not fall into [this trap.](https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/){:target="_blank"}
 
-    *Resolution*: An easy fix for this problem is following good coding principles. Did you consider using adapter pattern for the library to match your coding practices. If not, see if you can identify the reason why this was the case.
+1. **3rd party dependencies** - This might not seem obvious at first, but let me try explaining it. Imagine yourself using a 3rd party library that in the world of Promises & Futures, still uses callbacks. Now this library is essential and because you do not have time to waste, you end up sacrificing consistency in lieu of using the library. This however will result it your code having a mix of promises and callbacks and now, you will have to add weird promise constructors every time you use this library.
+
+    *Resolution*: An easy fix for this problem is following good coding principles. Did you consider using adapter pattern for the library to match your coding practices? If not, see if you can identify the reason why this was the case.
 
 Software Consistency is a wide topic and conscious steps are necessary in order to maintain it in the long run. And don't forget, this is just one of the several items required in order to build a sustainable product, but it sure is an important one!
