@@ -68,7 +68,7 @@ author:
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
   rss: true
-  # email: "developerdialogs@gmail.com"
+  email: "developerdialogs@gmail.com"
   # facebook: deanattali
   # github: daattali
   # twitter: daattali
@@ -101,7 +101,7 @@ share-links-active:
 #gtag: ""
 
 # Fill in your Google Analytics ID to track your website using GA
-#google_analytics: ""
+google_analytics: "UA-162806652-1"
 
 # Google Tag Manager ID
 #gtm: ""
