@@ -7,7 +7,7 @@ subtitle:
 published: true
 tags: [productivity, best practices]
 excerpt: Why is consistency in software so important ? What factors contribute to it and what we can do to resolve them.
-comments_id: 5
+comments_id: 8
 ---
 
 *If you haven't already, check out the [previous article](/understanding-software-inconsistency-with-examples) in this series, to see an inconsistent code sample and practice a code review to see if you can spot all the inconsistencies.*
