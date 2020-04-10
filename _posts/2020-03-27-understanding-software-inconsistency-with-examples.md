@@ -10,6 +10,7 @@ excerpt: As a software system is modified, its disorder, or entropy, tends to in
 comments_id: 4
 redirect_from: 
     - /consistency-is-crucial
+    - /consistency-is-crucial/
 ---
 
 ## Consistency is not so consistent
