@@ -8,8 +8,8 @@ published: true
 tags: [code review, best practices]
 excerpt: As a software system is modified, its disorder, or entropy, tends to increase. Let's do a code review exercise to spot some inconsistencies in the following code snippet.
 comments_id: 4
-redirect_from:
- - /consistency-is-crucial
+redirect_from: 
+    - /consistency-is-crucial
 ---
 
 ## Consistency is not so consistent
