@@ -7,6 +7,7 @@ subtitle:
 published: true
 tags: [themes, material design, swiftui]
 excerpt: Implementing themes help present a consistent design scheme and good for the maintainability of presentation layer for your app. Let's see at an approach to implementing themes in this developer dialogue.
+comments_id: 15
 ---
 
 In this dialogue, we will learn one approach of implementing themes in your app. As an added bonus, we will create two variations of it and switch between them at runtime without having to restart the app!
