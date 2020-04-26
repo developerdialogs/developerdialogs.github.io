@@ -6,7 +6,7 @@ subtitle:
 # bigimg: /img/path.jpg
 published: true
 tags: [themes, material design, swiftui]
-excerpt: Implementing themes help present a consistent design scheme and good for the maintainability of presentation layer for your app. Let's see at an approach to implementing themes in this developer dialogue.
+excerpt: Implementing themes help present a consistent design scheme and good for the maintainability of presentation layer for your app. Let's see at an approach to implementing themes in this tutorial.
 comments_id: 15
 ---
 
@@ -17,10 +17,12 @@ We will be using the power of composition and declarative programming in SwiftUI
 - SwiftUI: [https://developer.apple.com/videos/play/wwdc2019/216/](https://developer.apple.com/videos/play/wwdc2019/216/){:target="_blank"}
 - Material Design: [https://material.io/design/material-theming/implementing-your-theme.html](https://material.io/design/material-theming/implementing-your-theme.html){:target="_blank"}
 
+You can view the entire playground source code [here](https://github.com/developerdialogs/material-ui-theme-ios-example){:target="_blank"}
+
 ## Layout
 This is the layout we wish to achieve.
 <center> 
-<img src="/img/themeExample1.png" />
+<img src="/img/themeExample1.jpg" alt="Mobile app layout with a title, caption, image and content." />
 </center>
 
 We will start by identifying and decomposing different sections in this layout. This will let you define reusable components that can be used across different screens in your app hence achieving a consistent design.
@@ -32,21 +34,31 @@ In this layout, you can see, we have 4 distinguished sections:
 1. Action Buttons
 
 <center> 
-<img src="/img/themeExampleComponents.png" />
+<img src="/img/themeExampleComponents.jpg" alt="Different components in the previous layout." />
 </center>
 
 We will start by implementing these reusable components & then later combine them in our final container view.
 
+Let's open Xcode & create a new playground named **ThemeExample**. Open the Project Navigator and under `Sources` create a new folder `UIComponents`. Once done, create the below files in it.
+
+
+> Playground Tip: Since we are creating these files under `Sources`, these will be available as a framework to our main playground file. Hence we need to make our `classes` & `structs` *public* and `inits` *explicit*.
+
+
 ---
 
-
-**HeadlineWithCaption** - Basic component that contains a headline along with a caption.
+**HeadlineWithCaption.swift** - Basic component that contains a headline along with a caption.
 ```
-struct HeadlineWithCaption: View {
+public struct HeadlineWithCaption: View {
     @Binding var title: String
     @Binding var caption: String
+
+    public init(title: Binding<String>, caption: Binding<String>) {
+        _title = title
+        _caption = caption
+    }
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text(title)
             Text(caption)
@@ -55,12 +67,17 @@ struct HeadlineWithCaption: View {
 }
 ```
 
-**TitleWithText** - Basic component for content to display text along with a title.
+**TitleWithText.swift** - Basic component for content to display text along with a title.
 
 ```
 struct TitleWithText: View {
     @Binding var title: String
     @Binding var text: String
+
+    public init(title: Binding<String>, text: Binding<String>) {
+        _title = title
+        _text = text
+    }
     
     var body: some View {
         VStack {
@@ -72,13 +89,17 @@ struct TitleWithText: View {
 }
 ```
 
-**Action Button** - Reusable action button. 
+**ActionButton.swift** - Reusable action button. 
 We are not going to bind the title for the button, since it is assumed we wish to keep them constant.
 
-This component also does not have an action, since that is beyond the scope, but you can just as easily pass it as a parameter.
+This component also does not have an action, since that is beyond the scope, but you can just as easily set it.
 ```
 struct ActionButton: View {
     let title: String
+
+    public init(title: String) {
+        self.title = title
+    }
 
     var body: some View {
         Button(action: {}) {
@@ -89,10 +110,18 @@ struct ActionButton: View {
     }
 }
 ```
+
+After this step, your playground structure should look something like this:
+
+<center> 
+<img src="/img/themeExampleProjectStructure1.jpg" alt="Project structure with UIComponents subfolder under Sources containing ActionButton.swift, HeadlineWithCaption.swift and TitleWithText.swift"/>
+</center>
+
 ---
 
 #### and finally.... the Container View
 
+Open ThemeExample and add the view `ThemeExampleDemo` as below.
 Don't forget to update `UIImage(named: "image")!` with the correct asset you wish to use.
 
 ```
@@ -133,10 +162,10 @@ struct ThemeExampleDemo: View {
 }
 ```
 
-After you are done with above, you should have something similar to below:
+After you are done with above, check out the live preview. You should have your view laid out like this:
 
 <center> 
-<img src="/img/themeExample3.png" />
+<img src="/img/themeExample3.jpg" alt="App layout without any applied styles"/>
 </center>
 
 Easy Peasy!
@@ -145,62 +174,84 @@ Easy Peasy!
 
 Now that we have our components figured out. We are ready to implement themes. Let's get started!
 
-Start off by creating a `struct Theme` that defines the semantic layer of our theme. Since we are basing off our theme on Material Design, we will define the Color & Typography of our theme as below:
+Under Sources, add a new folder "Themes". We will use it to define our theme structure.
+Create a new file, `MaterialTheme.swift` and create a `class MaterialTheme` that will define the semantic layer of our theme. Since we are basing off our theme on Material Design, we will define the Color & Typography of our theme as below.
+
+> The reason we define MaterialTheme as a `class` (and not `struct`) is because we will use it as an Environment Object and need to conform to `ObservableObject` protocol. More on it below.
+
 
 ```
-struct Theme {
-    private(set) var colorPrimary: Color = .black
-    private(set) var colorSecondary: Color = .gray
-    private(set) var colorPrimaryVariant: Color = .black
-    private(set) var colorSecondaryVariant: Color = .gray
-    private(set) var colorBackground: Color = .white
-    private(set) var colorSurface: Color = .white
-    private(set) var colorError: Color = .white
-    
-    private(set) var colorOnPrimary: Color = .white
-    private(set) var colorOnSecondary: Color = .white
-    private(set) var colorOnBackground: Color = .black
-    private(set) var colorOnSurface: Color = .black
-    private(set) var colorOnError: Color = .red
-    
-    private(set) var typographyH1: Font = Font.system(size: 40).weight(.bold)
-    private(set) var typographyH2: Font = Font.system(size: 36).weight(.bold)
-    private(set) var typographyH3: Font = Font.system(size: 32).weight(.bold)
-    private(set) var typographyH4: Font = Font.system(size: 24).weight(.semibold)
-    private(set) var typographyH5: Font = Font.system(size: 20).weight(.semibold)
-    private(set) var typographyH6: Font = Font.system(size: 18).weight(.semibold)
-    
-    private(set) var typographySubtitle1: Font = Font.system(size: 16)
-    private(set) var typographySubtitle2: Font = Font.system(size: 14)
-    
-    private(set) var typographyBody1: Font = Font.system(size: 16)
-    private(set) var typographyBody2: Font = Font.system(size: 14)
-    
-    private(set) var typographyButton: Font = Font.system(size: 14)
-    
-    private(set) var typographyCaption: Font = Font.system(size: 12)
-    private(set) var typographyOverline: Font = Font.system(size: 14)
+public class MaterialTheme {
+
+    public struct ColorPalette {
+        public private(set) var primary: Color
+        public private(set) var secondary: Color
+        public private(set) var primaryVariant: Color
+        ...
+        ...
+
+        public private(set) var onPrimary: Color
+        public private(set) var onSecondary: Color
+        ...
+
+
+        public init(
+            primary: Color = .black,
+            secondary: Color = .gray ...) {
+            self.primary = primary
+            self.secondary = secondary
+            ...
+        }
+    }
+
+    public struct Typography {
+        public private(set) var h1: Font
+        public private(set) var h2: Font
+        ...
+        ...
+        public private(set) var button: Font
+
+        public init(
+            h1: Font = Font.system(size: 40).weight(.bold),
+            h2: Font = Font.system(size: 36).weight(.bold) ...) {
+            self.h1 = h1
+            self.h2 = h2
+            ...
+            ...
+        }
+    }
+
+    public var colorPalette: ColorPalette
+    public var typography: Typography
+
+    public init(colorPalette: ColorPalette = ColorPalette(), typography: Typography = Typography()) {
+        self.colorPalette = colorPalette
+        self.typography = typography
+    }
 }
 ```
 
 As you can see we define the general typography & color behaviors to use within our app. Of course you can extend it with more distinguished and custom attributes. For example `colorSuccess` & `colorOnSuccess`.
 
 
-We also provide default values for our theme, so that we can start using it immediately.
+We also provide default values, so that we can start using it immediately.
 
 ### Providing theme to our components
-A theme, when talking from the perspective of your app, is a global concept. All the UI components must inherently depend on your theme struct and SwiftUI provides us just the right tool to acheive this.
+A theme, when talking from the perspective of your app, is a global concept. All the UI components inherently depend on your theme for styling and SwiftUI provides us just the right tool to acheive this.
 
 **EnvironmentObject** - [https://developer.apple.com/documentation/swiftui/environmentobject](https://developer.apple.com/documentation/swiftui/environmentobject){:target="_blank"}
 
-We will create an environment object `class AppTheme`:
+Next, we will update our MaterialTheme class to be an `ObservableObject` and annotate its properties with `@Published`.  This will fire change notifications in SwiftUI everytime any of the Published properties are udpated.
+
+Make the below changes to the class definition and the `colorPalette` & `typography` properties.
+
 ```
-class AppTheme: ObservableObject {
-    @Published var theme: Theme
-    
-    init(theme: Theme) {
-        self.theme = theme
-    }
+public class MaterialTheme: ObservableObject {
+    ...
+    ...
+    ...
+    @Published public var colorPalette: ColorPalette
+    @Published public var typography: Typography
 }
 ```
 
@@ -208,147 +259,98 @@ Next, we will update our reusable components from previous section and apply sty
 
 In order to use the environment object, you need to add:
 ```
-@EnvironmentObject var env: AppTheme
+@EnvironmentObject var theme: MaterialTheme
 ```
 
-into the components.
+into the components. We use this environment object available to us to apply Material styles to our components.
 
 Here is a basic sample of styles applied to our components:
 
+
+**HeadlineWithCaption.swift**
 ```
-struct HeadlineWithCaption: View {
-    @Binding var title: String
-    @Binding var caption: String
-    @EnvironmentObject var env: AppTheme
-    
-    var body: some View {
-        VStack {
+public struct HeadlineWithCaption: View {
+    ...
+    @EnvironmentObject var theme: MaterialTheme
+
+    public var body: some View {
+        return VStack {
             Text(title)
-                .font(env.theme.typographyH1)
-                .foregroundColor(env.theme.colorOnBackground)
+                .font(theme.typography.h1)
+                .foregroundColor(theme.colorPalette.onBackground)
             Text(caption)
-                .font(env.theme.typographySubtitle1)
-                .foregroundColor(env.theme.colorOnBackground)
+                .font(theme.typography.subtitle1)
+                .foregroundColor(theme.colorPalette.onBackground)
         }
     }
 }
+```
 
-struct TitleWithText: View {
-    @Binding var title: String
-    @Binding var text: String
+
+**TitleWithText.swift**
+```
+public struct TitleWithText: View {
+    ...
     @EnvironmentObject var env: AppTheme
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text(title)
-                .font(env.theme.typographyH5)
-                .foregroundColor(env.theme.colorOnBackground)
+                .font(theme.typography.h5)
+                .foregroundColor(theme.colorPalette.onBackground)
             Text(text)
-                .font(env.theme.typographyBody1)
-                .foregroundColor(env.theme.colorOnBackground)
+                .font(theme.typography.body1)
+                .foregroundColor(theme.colorPalette.onBackground)
                 .multilineTextAlignment(.center)
         }
     }
 }
-
-enum ButtonType {
-    case primary, secondary, tertiary
-}
-
-struct ActionButton: View {
-    private let title: String
-    private let type: ButtonType
-    @EnvironmentObject var env: AppTheme
-    private var foregroundColor: Color {
-        switch type {
-        case .primary:
-            return env.theme.colorOnPrimary
-        case .secondary:
-            return env.theme.colorOnSecondary
-        case .tertiary:
-            return env.theme.colorOnSurface
-        }
-    }
-    
-    private var backgroundColor: Color {
-        switch type {
-        case .primary:
-            return env.theme.colorPrimary
-        case .secondary:
-            return env.theme.colorSecondary
-        case .tertiary:
-            return env.theme.colorSurface
-        }
-    }
-    init(title: String, type: ButtonType) {
-        self.title = title
-        self.type = type
-    }
-    var body: some View {
-        Button(action: { }) {
-            Text(title)
-                .font(.system(.headline))
-                .fontWeight(.bold)
-                .foregroundColor(foregroundColor)
-                .frame(width: 150, height: 50.0)
-        }
-        .background(backgroundColor)
-        .cornerRadius(12.0)
-    }
-}
 ```
 
-In the above example, I have added an `enum ButtonType` to account for different types of button that we require.
 
-Next, go ahead and update `ThemeExampleDemo` view to use the buttons correctly. ButtonType should be `.primary` for "Primary", `.secondary` for "Secondary" and `.tertiary` for "Link".
-
-Let's also apply shadow to our image as below:
+Lastly in our main playground file ThemeExample, we create an instance of theme and make it available as an environment object.
 
 ```
-Image(uiImage: UIImage(named: "image")!)
-                    .resizable()
-                    .clipShape(Circle())
-                    .frame(width: 200, height: 200)
-                    .shadow(color: env.theme.colorSecondary, radius: 10.0, x: 0, y: 0)
-```
+var theme = MaterialTheme(
+    colorPalette: MaterialTheme.ColorPalette(),
+    typography: MaterialTheme.Typography())
 
-and lastly creating and passing the environment object to our view:
-
-```
-let blackTheme = Theme()
-var env = AppTheme(theme: blackTheme)
-
-ThemeExampleDemo().environmentObject(env)
+let view  = ThemeExampleDemo().environmentObject(theme)
+PlaygroundPage.current.liveView = UIHostingController(rootView: view)
 ```
 
 ### Switching between themes
 
-Switching between themes is as easy as it can be. All we have to do is instantiate the new theme and update the environment variable.
+Switching between themes is as easy as it can be. All we have to do is instantiate the new theme and update the environment object.
 
 ```
-let redTheme = Theme(
-    colorPrimary: .red, 
-    colorSecondary: .red, 
-    colorPrimaryVariant: .red, 
-    colorSecondaryVariant: .red, 
-    colorBackground: .red, 
-    colorOnSecondary: .black, 
-    colorOnBackground: .red, 
-    colorOnSurface: .red, 
-    typographyH1: Font.system(size: 40).italic(),
-    typographyH2: Font.system(size: 36).italic(),
-    typographyH3: Font.system(size: 32).italic(),
-    typographyH4: Font.system(size: 24).italic(),
-    typographyH5: Font.system(size: 20).italic(),
-    typographyH6: Font.system(size: 18).italic())
+let redColorPalette = MaterialTheme.ColorPalette(
+    primary: .red,
+    secondary: .red,
+    primaryVariant: .red,
+    secondaryVariant: .red,
+    background: .red,
+    onSecondary: .black,
+    onBackground: .red,
+    onSurface: .red)
 
-env.theme = redTheme
+let updatedTypography = MaterialTheme.Typography(
+    h1: Font.system(size: 40).italic(),
+    h2: Font.system(size: 36).italic(),
+    h3: Font.system(size: 32).italic(),
+    h4: Font.system(size: 24).italic(),
+    h5: Font.system(size: 20).italic(),
+    h6: Font.system(size: 18).italic())
+
+theme.colorPalette = redColorPalette
+theme.typography = updatedTypography
+
 ```
 
 ## Finally...
 
 <center> 
-<img src="/img/themeDemo.gif" />
+<img src="/img/themeDemo.gif" alt="App layout with two different variations of theme applied" />
 </center>
 
 
