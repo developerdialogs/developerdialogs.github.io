@@ -17,7 +17,7 @@ We will be using the power of composition and declarative programming in SwiftUI
 - SwiftUI: [https://developer.apple.com/videos/play/wwdc2019/216/](https://developer.apple.com/videos/play/wwdc2019/216/){:target="_blank"}
 - Material Design: [https://material.io/design/material-theming/implementing-your-theme.html](https://material.io/design/material-theming/implementing-your-theme.html){:target="_blank"}
 
-You can view the entire playground source code [here](https://github.com/developerdialogs/material-ui-theme-ios-example){:target="_blank"}
+You can view the entire playground source code [here](https://github.com/developerdialogs/material-ui-theme-ios-example/tree/without-dependency-inversion){:target="_blank"}
 
 ## Layout
 This is the layout we wish to achieve.
@@ -353,5 +353,4 @@ theme.typography = updatedTypography
 <img src="/img/themeDemo.gif" alt="App layout with two different variations of theme applied" />
 </center>
 
-
-In the next dialogue, we will take this a step further and instead of instantiating the reusable components directly in our view and violating the SOLID principles of programming, we will make our container view generic and inject them instead. That will help us achieve true composability and also increase the testability of our views.
+In the [next dialogue](/implementing-material-design-themes-using-swiftui-part-2), we will take this a step further and instead of instantiating the reusable components directly in our view and violating the SOLID principles of programming, we will make our container view generic and inject them instead. That will help us achieve true composability and also increase the testability of our views.
