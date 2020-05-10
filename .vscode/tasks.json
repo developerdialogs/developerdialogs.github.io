@@ -6,7 +6,7 @@
         {
             "label": "run jekyll",
             "type": "shell",
-            "command": "bundle exec jekyll serve --watch --unpublished"
+            "command": "bundle exec jekyll serve --watch --unpublished --host 0.0.0.0"
         }
     ]
 }
