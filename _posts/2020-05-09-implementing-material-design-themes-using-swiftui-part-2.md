@@ -10,10 +10,10 @@ excerpt: In this tutorial, we define abstractions and invert the dependencies in
 comments_id: 21
 ---
 
-In the [previous tutorial](/implementing-material-design-themes-using-swiftui), we learned how to create reusable components, apply theme to them and then implemented a fully themed screen using SwiftUI.
-In this part, we will truly *compose* our screen by creating abstractions for the components.
+In the [previous tutorial](/implementing-material-design-themes-using-swiftui), we learned how to create reusable components, applied theme to them and then implemented a fully themed screen using SwiftUI.
+In this part, we will truly create a generic Container view and inject abstract components.
 
-This will allow our screen to dictate the contents of the components and their layout, but not which component gets rendered to the screen. 
+This will allow our screen to consume the components and guide their layout, but not how those components are rendered to the screen. 
 
 In order to that, let's start by identifying abstractions that we need for the ThemeExampleDemo view.
 
@@ -26,11 +26,8 @@ So we created 3 reusable views in our previous tutorial namely:
 - TitleWithText &
 - Action Button
 
-In order to create abstractions for these components, we will make ThemeExampleDemo generic, and add the below 3 private properties in the view.
+In order to create abstractions for these components, we will make ThemeExampleDemo generic, and add the below private properties in the view.
 
-> Here we are inverting the dependencies and making our higher level component i.e. ThemeExampleDemo rely on an abstraction (a function in this case) that could be implemented by a lower level component. 
-
-Note that you can also define explicit protocols instead of functions for these abstractions.
 
 ```
 struct ThemeExampleDemo<T: View, U: View, V: View>: View {
@@ -48,6 +45,10 @@ private let tertiaryButton: V
 ...
 
 ```
+
+> Here we are inverting the dependencies and making our higher level component i.e. ThemeExampleDemo rely on an abstraction (a function in this case) that could be implemented by a lower level component. 
+
+Note that you can also define explicit protocols instead of functions for these abstractions.
 
 Time to write the initializer for our view.
 
